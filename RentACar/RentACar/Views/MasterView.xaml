@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+            xmlns:converters="clr-namespace:RentACar.Converters" 
+            xmlns:viewmodels="clr-namespace:RentACar.ViewModels" 
+            x:DataType="viewmodels:MasterViewModel"
+            x:Class="RentACar.Views.MasterView"
+             Title="Perfil de usuário">
+    <TabbedPage.Resources>
+        <ResourceDictionary>
+            <converters:NegativoConverters x:Key="negativo"></converters:NegativoConverters>
+        </ResourceDictionary>
+    </TabbedPage.Resources>
+    <TabbedPage.Children>
+        <ContentPage Title="Usuário">
+            <Frame Margin="15" BorderColor="Gray" 
+               VerticalOptions="CenterAndExpand">
+                <StackLayout VerticalOptions="Center" HorizontalOptions="Center">
+                    <Image Source="{Binding FotoPerfil}"></Image>
+                    <Label Text="{Binding Nome}" />
+                    <BoxView HeightRequest="1" HorizontalOptions="Fill"></BoxView>
+                    <Label Text="{Binding Email}" />
+                    <BoxView HeightRequest="1" HorizontalOptions="Fill"></BoxView>
+                    <Label Text="Dados" />
+                    <BoxView HeightRequest="1" HorizontalOptions="Fill"></BoxView>
+                    <Button Text="Perfil" Command="{Binding EditarPerfilCommand}"></Button>
+                    <Button Text="Meus Agendamentos" Command="{Binding MeusAgendamentosCommand}"></Button>
+                    <Button Text="Novo Agendamento" Command="{Binding NovoAgendamentoCommand}"></Button>
+                </StackLayout>
+            </Frame>
+        </ContentPage>
+        <ContentPage Title="Editar">
+            <Frame Margin="15" BorderColor="Gray" 
+               VerticalOptions="CenterAndExpand">
+                <StackLayout VerticalOptions="Center" HorizontalOptions="Center">
+                    <Image Source="{Binding FotoPerfil}"></Image>
+                    <Button Text="Nova Foto" Command="{Binding TirarFotoCommand}"></Button>
+                    <TableView>
+                        <TableRoot>
+                            <TableSection Title="Dados Pessoais">
+                                <EntryCell Placeholder="Nome" Text="{Binding Nome}" IsEnabled="{Binding Editando}"></EntryCell>
+                                <EntryCell Placeholder="E-mail" Text="{Binding Email}" IsEnabled="{Binding Editando}"></EntryCell>
+                                <EntryCell Placeholder="Telefone" Text="{Binding Telefone}" IsEnabled="{Binding Editando}"></EntryCell>
+                                <EntryCell Placeholder="Data de Nascimento" Text="{Binding DataNascimento}" IsEnabled="{Binding Editando}"></EntryCell>
+                            </TableSection>
+                        </TableRoot>
+                    </TableView>
+                    <Button Text="Salvar" IsVisible="{Binding Editando}" Command="{Binding SalvarPerfilCommand}"></Button>
+                    <Button Text="Editar" IsVisible="{Binding Editando, Converter={StaticResource Key=negativo}}" Command="{Binding EditarCommand}}"></Button>
+                </StackLayout>
+            </Frame>
+        </ContentPage>
+    </TabbedPage.Children>
+       
+   
+</TabbedPage>
